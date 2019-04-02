@@ -19,6 +19,18 @@ class BurgerBuilder extends Component {
       bacon: 0
     },
     price: 4,
+    purchaseAble: false,
+  }
+
+  updatePurchaseState = () => {
+    this.setState((prevState) => {
+      const sum = Object.keys(prevState.ingredients)
+                    .map(igKey => prevState.ingredients[igKey])
+                    .reduce((total, el) => total + el, 0)
+      return {
+        purchaseAble: sum > 0
+      }
+    })
   }
 
   addIngredient = type => {
@@ -32,6 +44,7 @@ class BurgerBuilder extends Component {
         }
       }
     )
+    this.updatePurchaseState();
   }
 
   removeIngredient = type => {
@@ -40,13 +53,14 @@ class BurgerBuilder extends Component {
         ...prevState.ingredients,
         [type]: ((prevState.ingredients[type] === 0)
           ? prevState.ingredients[type]
-          : prevState.ingredients[type] - 1)
+          : prevState.ingredients[type] - 1) 
       },
       price: (prevState.ingredients[type] === 0)
        ? prevState.price
        : prevState.price - INGREDIENTS_PRICES[type]
      }
     ))
+    this.updatePurchaseState();
   }
 
   render(){
@@ -56,7 +70,10 @@ class BurgerBuilder extends Component {
         <BurgerContext.Provider value = {{ 
           addIngredient: this.addIngredient,
           removeIngredient: this.removeIngredient}}>
-          <BuildControls ingredients={this.state.ingredients} price={this.state.price}/>
+          <BuildControls
+            ingredients={this.state.ingredients}
+            price={this.state.price}
+            purchaseAble={this.state.purchaseAble}/>
         </BurgerContext.Provider>
       </>
     )

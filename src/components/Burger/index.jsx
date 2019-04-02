@@ -15,8 +15,6 @@ const Burger = props => {
 
     cookedIngredients = (cookedIngredients.length) ? cookedIngredients : "Please add ingredients";
 
-    console.log(cookedIngredients);
-
   return (
     <div className={classes.Burger}>
       <BurgerIngredient type="bread-top"/>

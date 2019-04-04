@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Burger from '../../components/Burger';
 import BuildControls from '../../components/BuildControls';
 import BurgerContext from '../../components/BurgerContext';
+import Modal from '../../components/Modal';
 
 const INGREDIENTS_PRICES = {
   salad: 0.6,
@@ -20,6 +21,7 @@ class BurgerBuilder extends Component {
     },
     price: 4,
     purchaseAble: false,
+    purchasing: false,
   }
 
   updatePurchaseState = () => {
@@ -31,6 +33,12 @@ class BurgerBuilder extends Component {
         purchaseAble: sum > 0
       }
     })
+  }
+
+  updatePurchasingState = () => {
+    this.setState({
+      purchasing: true,
+    });
   }
 
   addIngredient = type => {
@@ -63,9 +71,35 @@ class BurgerBuilder extends Component {
     this.updatePurchaseState();
   }
 
+  renderModal = () => {
+    const orderedIngredients = Object.keys(this.state.ingredients)
+      .map(igKey =>
+         <li key={igKey}>
+          {igKey.charAt(0).toUpperCase() + igKey.slice(1)}: {this.state.ingredients[igKey]}
+         </li>);
+
+    const modalChildren = (
+      <div>
+        <h1>Your Order</h1>
+        <p>A delicious burger with the following ingredients: </p>
+        <ul>
+          {orderedIngredients}
+        </ul>
+        <p>Continue to checkout?</p>
+      </div>
+    );
+
+    return (
+      <Modal show={this.state.purchasing}>
+        {modalChildren}
+      </Modal>
+    )
+  }
+
   render(){
     return(
       <>
+        {this.renderModal()}
         <Burger ingredients={this.state.ingredients}/>
         <BurgerContext.Provider value = {{ 
           addIngredient: this.addIngredient,
@@ -73,7 +107,8 @@ class BurgerBuilder extends Component {
           <BuildControls
             ingredients={this.state.ingredients}
             price={this.state.price}
-            purchaseAble={this.state.purchaseAble}/>
+            purchaseAble={this.state.purchaseAble}
+            purchasing={this.updatePurchasingState}/>
         </BurgerContext.Provider>
       </>
     )

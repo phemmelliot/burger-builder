@@ -89,6 +89,7 @@ class BurgerBuilder extends Component {
         <ul>
           {orderedIngredients}
         </ul>
+        <p><strong>Total Price: {this.state.price.toFixed(2)}</strong></p>
         <p>Continue to checkout?</p>
         <Button 
           type={'Success'}

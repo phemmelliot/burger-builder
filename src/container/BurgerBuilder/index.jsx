@@ -3,6 +3,7 @@ import Burger from '../../components/Burger';
 import BuildControls from '../../components/BuildControls';
 import BurgerContext from '../../components/BurgerContext';
 import Modal from '../../components/Modal';
+import Button from '../../components/Button';
 
 const INGREDIENTS_PRICES = {
   salad: 0.6,
@@ -36,11 +37,14 @@ class BurgerBuilder extends Component {
   }
 
   updatePurchasingState = () => {
-    this.setState({
-      purchasing: true,
-    });
+    this.setState((prevState) => ({
+      purchasing: !prevState.purchasing,
+    }));
   }
 
+  continuePurchasing = () => {
+    alert('You have successfully purchased this burger')
+  }
   addIngredient = type => {
     this.setState((prevState, props) => {
         return {
@@ -86,6 +90,16 @@ class BurgerBuilder extends Component {
           {orderedIngredients}
         </ul>
         <p>Continue to checkout?</p>
+        <Button 
+          type={'Success'}
+          onClick={this.continuePurchasing}>
+          Continue
+        </Button>
+        <Button
+          type={'Danger'}
+          onClick={this.updatePurchasingState}>
+          Cancel
+          </Button>
       </div>
     );
 
@@ -99,16 +113,17 @@ class BurgerBuilder extends Component {
   render(){
     return(
       <>
-        {this.renderModal()}
-        <Burger ingredients={this.state.ingredients}/>
         <BurgerContext.Provider value = {{ 
           addIngredient: this.addIngredient,
-          removeIngredient: this.removeIngredient}}>
-          <BuildControls
-            ingredients={this.state.ingredients}
-            price={this.state.price}
-            purchaseAble={this.state.purchaseAble}
-            purchasing={this.updatePurchasingState}/>
+          removeIngredient: this.removeIngredient,
+          cancelModal: this.updatePurchasingState}}>
+          {this.renderModal()}
+          <Burger ingredients={this.state.ingredients}/>
+            <BuildControls
+              ingredients={this.state.ingredients}
+              price={this.state.price}
+              purchaseAble={this.state.purchaseAble}
+              purchasing={this.updatePurchasingState}/>
         </BurgerContext.Provider>
       </>
     )

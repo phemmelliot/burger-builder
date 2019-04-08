@@ -35,3 +35,18 @@
     display: none;
   }
 }
+
+.HamBurger {
+
+}
+
+.Line {
+  height: 2px;
+  width: 40px;
+  background-color: white;
+  margin-top: 10px;
+}
+
+.Line:first-of-type {
+  margin-top: 0;
+}

@@ -8,7 +8,9 @@ const toolbar = props => (
     <div 
       className={classes.Menu}
       onClick={props.showDrawerHandler}>
-      Menu
+      <div className={classes.Line}></div>
+      <div className={classes.Line}></div>
+      <div className={classes.Line}></div>
     </div>
     <Logo />
     <div className={classes.Navigation}>

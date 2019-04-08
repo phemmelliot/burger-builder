@@ -1,0 +1,63 @@
+.SideDrawer {
+  position: fixed;
+  z-index: 600;
+  width: 60%;
+  max-width: 70%;
+  height: 100%;
+  padding: 32px 16px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  background-color: white;
+  transition: transform 0.3s ease-out;
+}
+
+.Open {
+  transform: translateX(0);
+}
+
+.Close {
+  transform: translateX(-100vw);
+}
+
+.Logo {
+  height: 60px;
+  width: 80px;
+  margin-bottom: 50px
+}
+
+.Logo img {
+  height: 60px;
+  width: 80px;
+  margin-top: 8%;
+  margin-bottom: 10%;
+}
+
+.Navigation {
+  list-style: none;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.List {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  
+}
+
+.List:last-of-type {
+  margin-top: 20px;
+}
+
+.Link {
+  text-decoration: none;
+  color: #703b09;
+}
+
+.Link:active,
+.active {
+  text-decoration: none;
+  color: rgba(18, 227, 241, 0.89);
+}

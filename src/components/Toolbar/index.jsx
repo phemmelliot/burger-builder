@@ -5,8 +5,15 @@ import Navigation from '../Navigation';
 
 const toolbar = props => (
   <header className={classes.Toolbar}>
+    <div 
+      className={classes.Menu}
+      onClick={props.showDrawerHandler}>
+      Menu
+    </div>
     <Logo />
-    <Navigation />
+    <div className={classes.Navigation}>
+      <Navigation />
+    </div>
   </header>
 );
 

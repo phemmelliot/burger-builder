@@ -1,5 +1,5 @@
 .Toolbar {
-  height: 7vh;
+  height: 7%;
   width: 100%;
   position: fixed;
   top: 0;
@@ -15,4 +15,23 @@
 
 .Toolbar nav {
   height: 100%;
+}
+
+.Navigation {
+  display: inline-block;
+}
+
+.Menu {
+  display: none;
+  color: white;
+}
+
+@media(max-width: 500px) {
+  .Menu {
+    display: inline-block;
+  }
+
+  .Navigation{
+    display: none;
+  }
 }

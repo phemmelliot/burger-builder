@@ -7,7 +7,8 @@ const backdrop = props => {
   return (
     props.show && <div 
       className={classes.Backdrop}
-      onClick={burgerContext.cancelModal}></div>
+      onClick={props.closeDrawer || burgerContext.cancelModal}>
+      </div>
   );
 }
 

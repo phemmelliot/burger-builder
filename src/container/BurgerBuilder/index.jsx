@@ -4,6 +4,7 @@ import BuildControls from '../../components/BuildControls';
 import BurgerContext from '../../components/BurgerContext';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import http from '../../utils/http';
 
 const INGREDIENTS_PRICES = {
   salad: 0.6,
@@ -43,8 +44,26 @@ class BurgerBuilder extends Component {
   }
 
   continuePurchasing = () => {
-    alert('You have successfully purchased this burger')
+    const order = {
+      ingredients: this.state.ingredients,
+      customer: {
+        name: 'First customer',
+        address: {
+          country: 'Nigeria',
+          state: 'Ondo',
+          street: 'Yaba'
+        },
+        email: 'testUser@test.com'
+      },
+      deliveryMethod: 'fast',
+      price: this.state.price,
+    }
+
+    http.post('/orders.json', order)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
   }
+
   addIngredient = type => {
     this.setState((prevState, props) => {
         return {

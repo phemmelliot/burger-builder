@@ -11,7 +11,7 @@ const withErrorHandler = (WrappedComponent, http) => {
         error: null
       }
 
-      http.interceptors.request.use(request => {
+      this.reqInterceptor = http.interceptors.request.use(request => {
         this.setState({
           error: null
         })
@@ -20,12 +20,17 @@ const withErrorHandler = (WrappedComponent, http) => {
         console.log(error);
         Promise.reject(error);
       })
-      
-      http.interceptors.response.use(res => res, error => {
+
+      this.responseInterceptor = http.interceptors.response.use(res => res, error => {
         this.setState({
           error,
         })
       })
+    }
+
+    componentWillUnmount(){
+      http.interceptors.request.eject(this.reqInterceptor);
+      http.interceptors.response.eject(this.responseInterceptor);
     }
 
     /**This componentDidMount interceptors intialization can't take care of errors that happens 

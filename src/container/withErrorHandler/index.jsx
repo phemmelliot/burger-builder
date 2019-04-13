@@ -4,11 +4,13 @@ import BurgerContext from '../../components/BurgerContext';
 
 const withErrorHandler = (WrappedComponent, http) => {
   return class extends Component {
-    state = {
-      error: null
-    }
+    constructor(props){
+      super(props);
 
-    componentDidMount() {
+      this.state = {
+        error: null
+      }
+
       http.interceptors.request.use(request => {
         this.setState({
           error: null
@@ -18,12 +20,32 @@ const withErrorHandler = (WrappedComponent, http) => {
         console.log(error);
         Promise.reject(error);
       })
+      
       http.interceptors.response.use(res => res, error => {
         this.setState({
           error,
         })
       })
     }
+
+    /**This componentDidMount interceptors intialization can't take care of errors that happens 
+     * in lifecycles of the HOC's children */
+    // componentDidMount() {
+    //   http.interceptors.request.use(request => {
+    //     this.setState({
+    //       error: null
+    //     })
+    //     return request;
+    //   }, error => {
+    //     console.log(error);
+    //     Promise.reject(error);
+    //   })
+    //   http.interceptors.response.use(res => res, error => {
+    //     this.setState({
+    //       error,
+    //     })
+    //   })
+    // }
 
     closeErrorModal = () => {
       this.setState({

@@ -28,6 +28,16 @@ class BurgerBuilder extends Component {
     purchaseAble: false,
     purchasing: false,
     isLoading: false,
+    error: null,
+  }
+
+  componentDidMount() {
+    http.get('/ingredients.json')
+      .then(response => this.setState({
+        ingredients: response.data
+      })).catch(error => this.setState({
+        error
+      }));
   }
 
   updatePurchaseState = () => {
@@ -67,7 +77,7 @@ class BurgerBuilder extends Component {
     this.setState({
       isLoading: true,
     })
-    http.post('/orders', order)
+    http.post('/orders.json', order)
       .then((response) => {
         this.setState(() => ({
           isLoading: false,
@@ -157,7 +167,7 @@ class BurgerBuilder extends Component {
           removeIngredient: this.removeIngredient,
           cancelModal: this.updatePurchasingState}}>
           {this.renderModal()}
-          <Burger ingredients={this.state.ingredients}/>
+          {this.state.ingredients ? <Burger ingredients={this.state.ingredients}/> : <Spinner />}
           <BuildControls
             ingredients={this.state.ingredients}
             price={this.state.price}

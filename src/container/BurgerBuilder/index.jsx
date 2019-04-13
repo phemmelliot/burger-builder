@@ -6,6 +6,7 @@ import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import http from '../../utils/http';
 import Spinner from '../../components/Spinner';
+import withErrorHandler from '../withErrorHandler';
 
 
 const INGREDIENTS_PRICES = {
@@ -41,6 +42,7 @@ class BurgerBuilder extends Component {
   }
 
   updatePurchasingState = () => {
+    console.log("Inside purchasing state");
     this.setState((prevState) => ({
       purchasing: !prevState.purchasing,
     }));
@@ -65,13 +67,12 @@ class BurgerBuilder extends Component {
     this.setState({
       isLoading: true,
     })
-    http.post('/orders.json', order)
+    http.post('/orders', order)
       .then((response) => {
         this.setState(() => ({
           isLoading: false,
           purchasing: false,
-        }))
-        console.log(response);
+        }));
       })
       .catch((error) => {
         console.log(error)
@@ -168,4 +169,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, http);

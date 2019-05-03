@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import http from '../../utils/http';
 import Spinner from '../../components/Spinner';
 import withErrorHandler from '../withErrorHandler';
+import classes from './BurgerBuilder.css';
 
 
 const INGREDIENTS_PRICES = {
@@ -33,11 +34,24 @@ class BurgerBuilder extends Component {
 
   componentDidMount() {
     http.get('/ingredients.json')
-      .then(response => this.setState({
-        ingredients: response.data
-      })).catch(error => this.setState({
+      .then(response => {
+        this.setState({
+          ingredients: response.data,
+          })
+        this.updatePurchaseState();
+        this.calculatePrice();
+        }).catch(error => this.setState({
         error
       }));
+  }
+
+  calculatePrice() {
+    const sumArray = Object.keys(this.state.ingredients).map(igKey => 
+      INGREDIENTS_PRICES[igKey]*this.state.ingredients[igKey]);
+    const sum = sumArray.reduce((total, el) => total + el, 0);
+    this.setState({
+      price: sum + 4
+    });
   }
 
   updatePurchaseState = () => {
@@ -59,38 +73,39 @@ class BurgerBuilder extends Component {
   }
 
   continuePurchasing = () => {
-    const order = {
-      ingredients: this.state.ingredients,
-      customer: {
-        name: 'First customer',
-        address: {
-          country: 'Nigeria',
-          state: 'Ondo',
-          street: 'Yaba'
-        },
-        email: 'testUser@test.com'
-      },
-      deliveryMethod: 'fast',
-      price: this.state.price,
-    }
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   customer: {
+    //     name: 'First customer',
+    //     address: {
+    //       country: 'Nigeria',
+    //       state: 'Ondo',
+    //       street: 'Yaba'
+    //     },
+    //     email: 'testUser@test.com'
+    //   },
+    //   deliveryMethod: 'fast',
+    //   price: this.state.price,
+    // }
 
-    this.setState({
-      isLoading: true,
-    })
-    http.post('/orders.json', order)
-      .then((response) => {
-        this.setState(() => ({
-          isLoading: false,
-          purchasing: false,
-        }));
-      })
-      .catch((error) => {
-        console.log(error)
-        this.setState(() => ({
-          isLoading: false,
-          purchasing: false,
-        }))
-      });
+    // this.setState({
+    //   isLoading: true,
+    // })
+    // http.post('/orders.json', order)
+    //   .then((response) => {
+    //     this.setState(() => ({
+    //       isLoading: false,
+    //       purchasing: false,
+    //     }));
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //     this.setState(() => ({
+    //       isLoading: false,
+    //       purchasing: false,
+    //     }))
+    //   });
+    this.props.history.push('/checkout');
   }
 
   addIngredient = type => {
@@ -165,9 +180,14 @@ class BurgerBuilder extends Component {
         <BurgerContext.Provider value = {{ 
           addIngredient: this.addIngredient,
           removeIngredient: this.removeIngredient,
-          cancelModal: this.updatePurchasingState}}>
+          cancelModal: this.updatePurchasingState,
+          ingredients: this.state.ingredients }}>
           {this.renderModal()}
-          {this.state.ingredients ? <Burger ingredients={this.state.ingredients}/> : <Spinner />}
+          {this.state.ingredients
+             ? <div className={classes.Burger}>
+                 <Burger ingredients={this.state.ingredients}/>
+               </div>
+              : <Spinner />}
           <BuildControls
             ingredients={this.state.ingredients}
             price={this.state.price}

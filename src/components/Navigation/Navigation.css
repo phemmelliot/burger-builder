@@ -13,7 +13,8 @@
 
 .List:active,
 .List:hover,
-.active {
+.active,
+.List.active {
   border-bottom: 5px solid rgba(18, 227, 241, 0.89);
   background-color: #ca8c52;
   box-sizing: border-box;

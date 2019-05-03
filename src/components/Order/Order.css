@@ -1,0 +1,17 @@
+.Order {
+  border: 2px solid #eee;
+  box-sizing: border-box;
+  box-shadow: 5px 3px #ccc;
+  margin: 10px auto;
+  width: 80%;
+  text-align: start;
+  padding-left: 20px;
+}
+
+.Ingredients {
+  display: inline-block;
+  margin-right: 5px;
+  border: 2px solid #ccc;
+  padding: 5px;
+}
+

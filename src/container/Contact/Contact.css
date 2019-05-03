@@ -1,0 +1,14 @@
+.Contact{
+  width: 30%;
+  margin: 50px auto;
+  box-shadow: 3px 3px #ccc;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  padding: 5px;
+}
+
+.Contact input{
+  display: block;
+  padding: 5px;
+  margin: 5px auto;
+}

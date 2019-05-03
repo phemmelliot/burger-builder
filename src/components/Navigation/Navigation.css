@@ -2,30 +2,46 @@
   list-style: none;
   height: 100%;
   display: flex;
+  margin: 0;
+  margin-right: 20px;
+  padding: 0;
 }
 
 .List {
   height: 100%;
+}
+
+.Link{
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px 10px;
   display: flex;
   align-items: center;
-}
-
-.List:active,
-.List:hover,
-.active,
-.List.active {
-  border-bottom: 5px solid rgba(18, 227, 241, 0.89);
-  background-color: #ca8c52;
-  box-sizing: border-box;
-}
-
-.List:last-of-type {
-  margin-right: 40px;
-}
-
-.Link {
   text-decoration: none;
   color: white;
 }
+
+.Link:active,
+.Link:hover,
+.active,
+.Link.active {
+  border-bottom: 5px solid rgba(18, 227, 241, 0.89);
+  background-color: #854d19;
+  box-sizing: border-box;
+}
+
+.active {
+  border-bottom: 5px solid rgba(18, 227, 241, 0.89);
+  background-color: #854d19;
+  box-sizing: border-box;
+}
+
+/* a:nth-last-of-type(1) {
+  margin-right: 40px;
+} */
+
+/* .Link {
+  text-decoration: none;
+  color: white;
+} */
 

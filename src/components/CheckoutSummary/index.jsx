@@ -4,14 +4,23 @@ import Button from '../Button';
 import classes from './Checkout.css';
 
 const checkOutSummary = (props) => {
-  console.log(props.ingredients);
   return (
     <div className={classes.Checkout}>
       <h1>We hope you enjoy it</h1>
       <div style={{ width: '100%', height: '300px', margin: 'auto'}}>
         <Burger ingredients={props.ingredients}/>
-        <Button type="Danger">CANCEL</Button>
-        <Button type="Success">CONTINUE</Button>
+        <Button
+          type="Danger"
+          onClick={props.cancel}
+          >
+          CANCEL
+        </Button>
+        <Button
+          type="Success"
+          onClick={props.continue}
+          >
+          CONTINUE
+        </Button>
       </div>
     </div>
   )
